@@ -1,3 +1,5 @@
+import { IconSymbol } from "@/components/ui/icon-symbol";
+import { DEFAULT_LIST_ID, TASK_LISTS } from "@/constants/task-lists";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import {
@@ -9,8 +11,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { DEFAULT_LIST_ID, TASK_LISTS } from "@/constants/task-lists";
-import { IconSymbol } from "@/components/ui/icon-symbol";
 
 type Task = {
   id: string;
@@ -189,7 +189,7 @@ export default function Index() {
         {listTasks.length > 0 && (
           <View style={styles.statsRow}>
             <View style={styles.statBox}>
-              <Text style={styles.statLabel}>Insgesamt</Text>
+              <Text style={styles.statLabel}>Gesamt</Text>
               <Text style={styles.statValue}>{listTasks.length}</Text>
             </View>
             <View style={styles.statBox}>
@@ -300,15 +300,16 @@ const styles = StyleSheet.create({
   },
   listTabsRow: {
     flexDirection: "row",
+    flexWrap: "wrap",
     marginBottom: 12,
   },
   listTab: {
     paddingVertical: 6,
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
     borderRadius: 999,
     borderWidth: 1,
     borderColor: "#1f2937",
-    marginRight: 8,
+    marginRight: 6,
     backgroundColor: "#020617",
   },
   listTabInner: {
