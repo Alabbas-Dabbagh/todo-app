@@ -109,16 +109,13 @@ There are currently no automated tests; all tests were **manually executed** and
 
 ---
 
-## Documentation & Presentation
+## Documentation
 
 - `docs/todo-app.md` – High‑level app description (features, UI design, technical details)
 - `docs/architecture.md` – Architecture description and data flow
 - `docs/requirments.md` – Software Requirements Specification (SRS)
 - `docs/system-tests.md` – System test documentation and results
 - `docs/project-plan.md` – Project plan & development phases
-- `docs/architecture.puml` – UML diagram (PlantUML)
-- `presentation/slides.md` – Marp slides for a 15‑minute university presentation
-- `presentation/demo-script.md` – 2‑minute live demo guide
 
 ---
 
