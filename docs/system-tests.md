@@ -1,7 +1,7 @@
 # System Test Documentation
 
 ## Project
-Mobile Aufgabenverwaltung (To-Do App)
+Mobile task manager (To-Do App)
 
 ## Author
 Alabbas Dabbagh
@@ -21,7 +21,7 @@ Requirement: R1 – Task Creation
 Test Steps:
 1. Start the application.
 2. Enter a task title in the input field.
-3. Press the "Add" button.
+3. Press the **„Hinzufügen“** button.
 
 Expected Result:
 - The new task appears in the list.
@@ -55,7 +55,7 @@ Requirement: R3 – Task Deletion
 
 Test Steps:
 1. Add a task.
-2. Press the "Löschen" button next to the task.
+2. Press the **„Löschen“** button next to the task.
 
 Expected Result:
 - The task is removed from the list.

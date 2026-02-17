@@ -1,64 +1,66 @@
-## Todo-App
+## To-Do App
 
-Diese Todo-App ist eine kleine, lokale Aufgabenverwaltung auf Basis von **React Native**.  
-Alle Einträge werden dauerhaft auf dem Gerät gespeichert und bleiben auch nach einem Neustart der App erhalten.
+This to-do app is a small, local task manager built with **React Native**.  
+All entries are stored persistently on the device and remain available after restarting the app.
 
-### Funktionen
+The **UI texts inside the app are in German** (for example: title `„Meine Aufgaben“`, button labels `„Hinzufügen“` and `„Löschen“`), while this documentation is written in English.
 
-- **Aufgaben anlegen**  
-  - Eingabe im Textfeld „Neue Aufgabe hinzufügen…“  
-  - Bestätigen über den Button **„Hinzufügen“** oder die Enter/Done-Taste der Tastatur  
-  - Leere Eingaben werden per Hinweisdialog verhindert
+### Features
 
-- **Aufgaben abhaken**  
-  - Tippen auf eine Aufgabe toggelt ihren Status
-  - Der Status wird über einen farbigen Kreis links und durchgestrichenen Text visualisiert
+- **Create tasks**  
+  - Enter text into the input field labeled “Neue Aufgabe hinzufügen…”  
+  - Confirm via the **„Hinzufügen“** button or the enter/done key on the keyboard  
+  - Empty input is prevented via a hint dialog
 
-- **Aufgaben löschen**  
-  - Über den **„Löschen“**-Button am rechten Rand einer Aufgabe
+- **Complete tasks**  
+  - Tap on a task to toggle its completion state  
+  - Status is visualised by a coloured circle on the left and strikethrough text
 
-- **Persistente Speicherung**  
-  - Technisch umgesetzt über `AsyncStorage` mit dem Key `todo_tasks_v1`
-  - Beim Start der App werden vorhandene Einträge geladen
-  - Jede Änderung an der Liste wird automatisch gespeichert
+- **Delete tasks**  
+  - Use the **„Löschen“** button on the right side of a task
 
-### UI- und Designkonzept
+- **Persistent storage**  
+  - Implemented with `AsyncStorage` using the key `todo_tasks_v1`  
+  - On app start, existing tasks are loaded  
+  - Every change to the list is saved automatically
+
+### UI and design concept
 
 - **Layout**
-  - Dunkles, ruhiges Hintergrund-Theme (`styles.container`)
-  - Oben ein Header mit Titel **„Meine Aufgaben“** und Unterzeile mit Status
-  - Darunter eine „Karte“ (`styles.card`), die Eingabebereich und Liste bündelt
+  - Dark, calm background theme (`styles.container`)  
+  - Header at the top with the title **„Meine Aufgaben“** and a subtitle indicating the current status  
+  - Below, a “card” (`styles.card`) that groups the input area and the list
 
-- **Statusanzeige**
-  - Im Header wird angezeigt, wie viele offene Aufgaben es gibt  
-    - 0 offene Aufgaben: Text „Du bist aktuell auf dem Laufenden.“  
-    - >0 offene Aufgaben: z. B. „3 offene Aufgaben“
+- **Status display**
+  - The header shows how many open tasks exist  
+    - 0 open tasks: text “Du bist aktuell auf dem Laufenden.”  
+    - >0 open tasks: e.g. “3 offene Aufgaben”
 
-- **Eingabezeile**
-  - Abgerundetes Eingabefeld (Pill-Form) mit dezenter Umrandung
-  - Platzhaltertext in gedämpfter Farbe (`placeholderTextColor`)
-  - Grüner, ebenfalls abgerundeter Primärbutton **„Hinzufügen“**
+- **Input row**
+  - Rounded, pill-shaped input field with subtle border  
+  - Placeholder text with muted colour (`placeholderTextColor`)  
+  - Green, rounded primary button **„Hinzufügen“**
 
-- **Aufgabenliste**
-  - Jede Aufgabe liegt in einer abgerundeten Karte mit feiner Umrandung
-  - Links ein Statusindikator:
-    - Umrandeter Kreis für offene Aufgaben
-    - Ausgefüllter grüner Kreis für erledigte Aufgaben
-  - Text von erledigten Aufgaben ist leicht ausgegraut und durchgestrichen
+- **Task list**
+  - Each task is displayed inside a rounded card with a subtle border  
+  - Status indicator on the left:
+    - Outlined circle for open tasks  
+    - Filled green circle for completed tasks  
+  - Completed task text is slightly greyed out and shown with strikethrough
 
-- **Leerer Zustand**
-  - Wenn noch keine Aufgaben vorhanden sind, wird der Inhalt der Liste zentriert dargestellt
-  - Ergänzend zeigt der Header den Hinweis, dass alle Aufgaben erledigt sind
+- **Empty state**
+  - When there are no tasks yet, the list content is vertically centered  
+  - The header additionally indicates that all tasks are done
 
-### Technische Details
+### Technical details
 
-- **Datei**: `app/(tabs)/index.tsx`
-- **Typdefinition**
-  - `Task` enthält `id: string`, `title: string`, `completed: boolean`
+- **File**: `app/(tabs)/index.tsx`  
+- **Type definition**
+  - `Task` contains `id: string`, `title: string`, `completed: boolean`
 - **State**
-  - `title`: aktueller Eingabetext
-  - `tasks`: aktuelle Liste aller Aufgaben
-  - `isLoaded`: Flag, ob der erste Ladevorgang aus dem Speicher abgeschlossen ist
+  - `title`: current input text  
+  - `tasks`: current list of all tasks  
+  - `isLoaded`: flag indicating whether the initial load from storage has completed
 
-Die Struktur ist bewusst kompakt gehalten, damit die App leicht erweitert werden kann, z. B. um Filter (nur offene/erledigte Aufgaben), Kategorien oder Fälligkeitsdaten.
+The structure is intentionally compact so that the app can easily be extended in the future—for example with filters (open/completed tasks), categories or due dates.
 

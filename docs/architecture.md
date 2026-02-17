@@ -1,7 +1,7 @@
 # Software Architecture Documentation
 
 ## Project
-Mobile Aufgabenverwaltung (To-Do App)
+Mobile task manager (To-Do App)
 
 ## Author
 Alabbas Dabbagh
@@ -9,46 +9,50 @@ Alabbas Dabbagh
 ---
 
 ## 1. Overview
-The application uses a simple component-based architecture with React Native.
+
+The application uses a simple component-based architecture with React Native and TypeScript.
 
 Main parts:
-1) UI Layer
-2) State Management
-3) Persistence (AsyncStorage)
+1) UI layer  
+2) State management  
+3) Persistence layer (AsyncStorage)
 
 ---
 
 ## 2. Components
 
-### UI Layer
-- TextInput to enter a task
-- Add button to create a task
-- FlatList to display all tasks
-- Tap on task to toggle completed
-- Delete button to remove a task
+### UI layer
+- `TextInput` to enter a task  
+- **„Hinzufügen“** button to create a task  
+- `FlatList` to display all tasks  
+- Tap on a task to toggle its completed state  
+- **„Löschen“** button to remove a task
 
-### State Management
-- tasks[] stored in React state
+### State management
+- `tasks[]` stored in React state  
 - Task structure:
-  - id: string
-  - title: string
-  - completed: boolean
+  - `id: string`
+  - `title: string`
+  - `completed: boolean`
 
-### Persistence Layer
-- AsyncStorage stores tasks locally
-- loadTasks() on app start
-- saveTasks() after each change
-
----
-
-## 3. Data Flow
-User action (Add/Toggle/Delete) -> update tasks state -> save to AsyncStorage -> UI re-renders
+### Persistence layer
+- `AsyncStorage` stores tasks locally  
+- `loadTasks()` on app start  
+- `saveTasks()` after each change
 
 ---
 
-## 4. Technology Stack
-- React Native
-- Expo
-- JavaScript
-- AsyncStorage
+## 3. Data flow
+
+User action (Add / Toggle / Delete) → update `tasks` state → save to AsyncStorage → UI re-renders.
+
+---
+
+## 4. Technology stack
+
+- React Native  
+- Expo  
+- TypeScript  
+- AsyncStorage  
 - Git + GitHub
+

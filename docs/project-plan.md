@@ -1,7 +1,7 @@
 # Project Plan & Management
 
 ## Project
-Mobile Aufgabenverwaltung (To-Do App)
+Mobile task manager (To-Do App)
 
 ## Author
 Alabbas Dabbagh
@@ -17,7 +17,7 @@ The project was developed following the Software V-Model structure, combined wit
 # Phase 1 – Requirements Analysis
 
 - Definition of functional and non-functional requirements
-- Documentation in requirements.md
+- Documentation in `requirments.md`
 - Clear acceptance criteria for each requirement
 
 ---
@@ -25,9 +25,9 @@ The project was developed following the Software V-Model structure, combined wit
 # Phase 2 – Architecture Design
 
 - Definition of system components
-- UI Layer
-- State Management
-- Persistence Layer (AsyncStorage)
+- UI layer
+- State management
+- Persistence layer (AsyncStorage)
 - UML documentation created
 
 ---
@@ -52,7 +52,7 @@ Sprint 3:
 # Phase 4 – Testing
 
 - Manual system tests for each requirement
-- Test documentation in system-tests.md
+- Test documentation in `system-tests.md`
 - Verification of persistence functionality
 
 ---
