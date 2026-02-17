@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCallback, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { DEFAULT_LIST_ID, TASK_LISTS } from "@/constants/task-lists";
 import { IconSymbol } from "@/components/ui/icon-symbol";
@@ -17,6 +17,7 @@ const STORAGE_KEY = "todo_tasks_v1";
 
 export default function ExploreScreen() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [historyFilterId, setHistoryFilterId] = useState<string>("all");
 
   const loadTasks = useCallback(async () => {
     try {
@@ -67,10 +68,18 @@ export default function ExploreScreen() {
     };
   });
 
-  const tasksWithDate = [...tasks].sort((a, b) => {
-    const aTime = a.createdAt ?? Number(a.id) ?? 0;
-    const bTime = b.createdAt ?? Number(b.id) ?? 0;
-    return bTime - aTime;
+  const completedTasksWithDate = tasks
+    .filter((task) => task.completed)
+    .sort((a, b) => {
+      const aTime = a.createdAt ?? Number(a.id) ?? 0;
+      const bTime = b.createdAt ?? Number(b.id) ?? 0;
+      return bTime - aTime;
+    });
+
+  const historyTasks = completedTasksWithDate.filter((task) => {
+    if (historyFilterId === "all") return true;
+    const listId = task.listId ?? DEFAULT_LIST_ID;
+    return listId === historyFilterId;
   });
 
   const formatDate = (millis: number | undefined) => {
@@ -137,14 +146,58 @@ export default function ExploreScreen() {
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Verlauf</Text>
-        {tasksWithDate.length === 0 ? (
+        <View style={styles.historyHeaderRow}>
+          <Text style={styles.cardTitle}>Verlauf</Text>
+          <View style={styles.historyFilterRow}>
+            <TouchableOpacity
+              key="all"
+              style={[
+                styles.filterChip,
+                historyFilterId === "all" && styles.filterChipActive,
+              ]}
+              onPress={() => setHistoryFilterId("all")}
+            >
+              <Text
+                style={[
+                  styles.filterChipText,
+                  historyFilterId === "all" && styles.filterChipTextActive,
+                ]}
+              >
+                Alle
+              </Text>
+            </TouchableOpacity>
+            {TASK_LISTS.map((list) => {
+              const isActive = historyFilterId === list.id;
+              return (
+                <TouchableOpacity
+                  key={list.id}
+                  style={[
+                    styles.filterChip,
+                    isActive && styles.filterChipActive,
+                  ]}
+                  onPress={() => setHistoryFilterId(list.id)}
+                >
+                  <Text
+                    style={[
+                      styles.filterChipText,
+                      isActive && styles.filterChipTextActive,
+                    ]}
+                  >
+                    {list.title}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </View>
+
+        {historyTasks.length === 0 ? (
           <Text style={styles.emptyText}>
-            Noch keine Aufgaben vorhanden. Lege zuerst Aufgaben im Tab
-            „Meine Aufgaben“ an.
+            Noch keine erledigten Aufgaben vorhanden. Schließe zuerst Aufgaben im Tab
+            „Aufgaben“ ab.
           </Text>
         ) : (
-          tasksWithDate.map((task) => {
+          historyTasks.map((task) => {
             const createdMillis = task.createdAt ?? Number(task.id) ?? 0;
             return (
               <View key={task.id} style={styles.historyRow}>
@@ -170,9 +223,7 @@ export default function ExploreScreen() {
                     </Text>
                   </View>
                 </View>
-                <Text style={styles.historyStatus}>
-                  {task.completed ? "Erledigt" : "Offen"}
-                </Text>
+                <Text style={styles.historyStatus}>Erledigt</Text>
               </View>
             );
           })
@@ -261,6 +312,18 @@ const styles = StyleSheet.create({
     color: "#6b7280",
     fontSize: 14,
   },
+  historyHeaderRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  historyFilterRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "flex-end",
+    gap: 6,
+  },
   historyRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -331,5 +394,25 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "#22c55e",
+  },
+  filterChip: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: "#1f2937",
+    backgroundColor: "#020617",
+  },
+  filterChipActive: {
+    backgroundColor: "#111827",
+    borderColor: "#22c55e",
+  },
+  filterChipText: {
+    fontSize: 11,
+    color: "#9ca3af",
+  },
+  filterChipTextActive: {
+    color: "#e5e7eb",
+    fontWeight: "600",
   },
 });

@@ -40,7 +40,9 @@ Main parts:
   - `completed: boolean`
   - `createdAt?: number` (Unix timestamp in milliseconds to support history and sorting)
   - `listId: string` (identifier of the list, e.g. `personal`, `work`, `shopping`)
-- `currentListId` selects which list is currently active on the main screen.
+- `currentListId` selects which list is currently active on the main screen (or the virtual “all” filter).
+
+- On the main screen, only **open** tasks of the active list/filter are shown; completed tasks remain in state and storage but are only visible in the history view.
 
 ### Persistence layer
 - `AsyncStorage` stores tasks locally under the key `todo_tasks_v1`  

@@ -62,8 +62,9 @@ the system shall display an overview of the task list including statistics and a
 
 Acceptance Criteria:
 - The overview shows: total number of tasks, number of open tasks, number of completed tasks and completion rate in percent.
-- A history list shows tasks in reverse chronological order (newest first).
-- Each history entry shows at least the task title, its current status (open / completed) and the creation time.
+- A history list shows only **completed** tasks in reverse chronological order (newest first).
+- Each history entry shows at least the task title and the creation time.
+- The user can filter the history by “Alle” or by a specific list.
 
 ---
 

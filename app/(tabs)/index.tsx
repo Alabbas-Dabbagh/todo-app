@@ -26,7 +26,7 @@ export default function Index() {
   const [title, setTitle] = useState<string>("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [currentListId, setCurrentListId] = useState<string>(DEFAULT_LIST_ID);
+  const [currentListId, setCurrentListId] = useState<string>("all");
 
   // Load tasks on app start
   useEffect(() => {
@@ -71,12 +71,14 @@ export default function Index() {
     }
 
     const now = Date.now();
+    const targetListId =
+      currentListId === "all" ? DEFAULT_LIST_ID : currentListId;
     const newTask: Task = {
       id: now.toString(),
       title: title.trim(),
       completed: false,
       createdAt: now,
-      listId: currentListId,
+      listId: targetListId,
     };
 
     setTasks([newTask, ...tasks]);
@@ -95,15 +97,18 @@ export default function Index() {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
-  const tasksInCurrentList = tasks.filter(
-    (task) => task.listId === currentListId
-  );
-  const openCount = tasksInCurrentList.filter((task) => !task.completed).length;
-  const completedCount = tasksInCurrentList.length - openCount;
+  const listTasks =
+    currentListId === "all"
+      ? tasks
+      : tasks.filter((task) => task.listId === currentListId);
+
+  const openTasksInCurrentList = listTasks.filter((task) => !task.completed);
+  const openCount = openTasksInCurrentList.length;
+  const completedCount = listTasks.length - openCount;
   const completionRate =
-    tasksInCurrentList.length === 0
+    listTasks.length === 0
       ? 0
-      : Math.round((completedCount / tasksInCurrentList.length) * 100);
+      : Math.round((completedCount / listTasks.length) * 100);
 
   const currentList =
     TASK_LISTS.find((list) => list.id === currentListId) ?? TASK_LISTS[0];
@@ -113,8 +118,10 @@ export default function Index() {
       <View style={styles.header}>
         <Text style={styles.appTitle}>Meine Aufgaben</Text>
         <Text style={styles.subtitle}>
-          {tasksInCurrentList.length === 0
-            ? `In der Liste "${currentList.title}" gibt es aktuell keine offenen Aufgaben.`
+          {openTasksInCurrentList.length === 0
+            ? currentListId === "all"
+              ? 'In der Ansicht "Alle" gibt es aktuell keine offenen Aufgaben.'
+              : `In der Liste "${currentList.title}" gibt es aktuell keine offenen Aufgaben.`
             : `${openCount} offene ${
                 openCount === 1 ? "Aufgabe" : "Aufgaben"
               }`}
@@ -123,6 +130,31 @@ export default function Index() {
 
       <View style={styles.card}>
         <View style={styles.listTabsRow}>
+          <TouchableOpacity
+            key="all"
+            style={[
+              styles.listTab,
+              currentListId === "all" && styles.listTabActive,
+            ]}
+            onPress={() => setCurrentListId("all")}
+          >
+            <View style={styles.listTabInner}>
+              <IconSymbol
+                size={16}
+                name="list.bullet"
+                color={currentListId === "all" ? "#22c55e" : "#6b7280"}
+              />
+              <Text
+                style={[
+                  styles.listTabText,
+                  currentListId === "all" && styles.listTabTextActive,
+                ]}
+              >
+                Alle
+              </Text>
+            </View>
+          </TouchableOpacity>
+
           {TASK_LISTS.map((list) => {
             const isActive = list.id === currentListId;
             return (
@@ -154,11 +186,11 @@ export default function Index() {
           })}
         </View>
 
-        {tasksInCurrentList.length > 0 && (
+        {listTasks.length > 0 && (
           <View style={styles.statsRow}>
             <View style={styles.statBox}>
               <Text style={styles.statLabel}>Insgesamt</Text>
-              <Text style={styles.statValue}>{tasksInCurrentList.length}</Text>
+              <Text style={styles.statValue}>{listTasks.length}</Text>
             </View>
             <View style={styles.statBox}>
               <Text style={styles.statLabel}>Offen</Text>
@@ -191,7 +223,7 @@ export default function Index() {
         </View>
 
         <FlatList
-          data={tasksInCurrentList}
+          data={openTasksInCurrentList}
           keyExtractor={(item) => item.id}
           style={styles.list}
           contentContainerStyle={

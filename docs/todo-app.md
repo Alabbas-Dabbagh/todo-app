@@ -33,7 +33,8 @@ The **UI texts inside the app are in German** (for example: title `„Meine Aufg
   - The second tab (`Übersicht`) shows an overview dashboard  
   - Key figures: total tasks, open tasks, completed tasks and completion rate (in %)  
   - A per-list summary shows counts and completion rate for each list  
-  - A history list shows all tasks in reverse chronological order with their status and creation time
+  - A history list shows all **completed** tasks in reverse chronological order  
+  - The history can be filtered by “Alle” or by a specific list
 
 ### UI and design concept
 
@@ -54,7 +55,7 @@ The **UI texts inside the app are in German** (for example: title `„Meine Aufg
   - Green, rounded primary button **„Hinzufügen“**
 
 - **Task list**
-  - Each task is displayed inside a rounded card with a subtle border  
+  - Each **open** task is displayed inside a rounded card with a subtle border  
   - Status indicator on the left:
     - Outlined circle for open tasks  
     - Filled green circle for completed tasks  
