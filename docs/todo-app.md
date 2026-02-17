@@ -24,6 +24,11 @@ The **UI texts inside the app are in German** (for example: title `„Meine Aufg
   - On app start, existing tasks are loaded  
   - Every change to the list is saved automatically
 
+- **Statistics and history (Explore tab)**  
+  - A second tab (`Explore`) shows an overview dashboard  
+  - Key figures: total tasks, open tasks, completed tasks and completion rate (in %)  
+  - A history list shows all tasks in reverse chronological order with their status and creation time
+
 ### UI and design concept
 
 - **Layout**
@@ -52,11 +57,17 @@ The **UI texts inside the app are in German** (for example: title `„Meine Aufg
   - When there are no tasks yet, the list content is vertically centered  
   - The header additionally indicates that all tasks are done
 
+- **Statistics row on the main screen**
+  - When there are tasks, a compact statistics row appears above the list  
+  - It shows: total number of tasks, number of open tasks, number of completed tasks and the completion rate
+
 ### Technical details
 
-- **File**: `app/(tabs)/index.tsx`  
+- **Files**:  
+  - Main list: `app/(tabs)/index.tsx`  
+  - Overview & statistics: `app/(tabs)/explore.tsx`
 - **Type definition**
-  - `Task` contains `id: string`, `title: string`, `completed: boolean`
+  - `Task` contains `id: string`, `title: string`, `completed: boolean`, `createdAt?: number`
 - **State**
   - `title`: current input text  
   - `tasks`: current list of all tasks  

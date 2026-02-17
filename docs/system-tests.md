@@ -99,3 +99,27 @@ Expected Result:
 
 Result:
 PASS
+
+---
+
+## T6 – Test Statistics and History (R6)
+
+Requirement: R6 – Statistics and History
+
+Test Steps:
+1. Ensure there are at least three tasks:  
+   - One completed task  
+   - Two open tasks  
+2. Open the `Explore` tab.  
+3. Check the statistics section.  
+4. Check the history list.
+
+Expected Result:
+- The total number of tasks matches the number of created tasks.
+- The counts for open and completed tasks match the current list state.
+- The completion rate is calculated correctly (completed / total in percent).
+- The history shows all tasks, sorted with the newest task at the top.
+- Each history entry shows the title, current status (open/completed) and a readable creation time.
+
+Result:
+PASS

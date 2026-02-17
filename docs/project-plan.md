@@ -45,6 +45,7 @@ Sprint 2:
 Sprint 3:
 - Styling improvements
 - Code commenting
+- Statistics dashboard (Explore tab) and summary cards on the main screen
 - Final testing
 
 ---

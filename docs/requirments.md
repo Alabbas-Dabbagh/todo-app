@@ -54,6 +54,19 @@ Acceptance Criteria:
 
 ---
 
+# Additional Functional Requirement
+
+## R6 – Statistics and History
+When the user opens the `Explore` tab,  
+the system shall display an overview of the task list including statistics and a chronological history.
+
+Acceptance Criteria:
+- The overview shows: total number of tasks, number of open tasks, number of completed tasks and completion rate in percent.
+- A history list shows tasks in reverse chronological order (newest first).
+- Each history entry shows at least the task title, its current status (open / completed) and the creation time.
+
+---
+
 # Non-Functional Requirement
 
 ## R5 – Usability
