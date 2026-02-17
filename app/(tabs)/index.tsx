@@ -73,9 +73,7 @@ export default function Index() {
   const toggleTask = (id: string) => {
     setTasks(
       tasks.map((task) =>
-        task.id === id
-          ? { ...task, completed: !task.completed }
-          : task
+        task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
   };
@@ -84,47 +82,75 @@ export default function Index() {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
+  const openCount = tasks.filter((task) => !task.completed).length;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>To-Do Liste</Text>
-
-      <View style={styles.inputRow}>
-        <TextInput
-          style={styles.input}
-          placeholder="Neue Aufgabe..."
-          value={title}
-          onChangeText={setTitle}
-        />
-        <TouchableOpacity style={styles.addButton} onPress={addTask}>
-          <Text style={{ color: "#000000" }}>Add</Text>
-        </TouchableOpacity>
+      <View style={styles.header}>
+        <Text style={styles.appTitle}>Meine Aufgaben</Text>
+        <Text style={styles.subtitle}>
+          {tasks.length === 0
+            ? "Du bist aktuell auf dem Laufenden."
+            : `${openCount} offene ${
+                openCount === 1 ? "Aufgabe" : "Aufgaben"
+              }`}
+        </Text>
       </View>
 
-      <FlatList
-        data={tasks}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.itemRow}>
-            <TouchableOpacity
-              style={{ flex: 1 }}
-              onPress={() => toggleTask(item.id)}
-            >
-              <Text
-                style={[
-                  styles.itemText,
-                  item.completed && styles.done,
-                ]}
-              >
-                {item.title}
-              </Text>
-            </TouchableOpacity>
+      <View style={styles.card}>
+        <View style={styles.inputRow}>
+          <TextInput
+            style={styles.input}
+            placeholder="Neue Aufgabe hinzufügen..."
+            placeholderTextColor="#6b7280"
+            value={title}
+            onChangeText={setTitle}
+            returnKeyType="done"
+            onSubmitEditing={addTask}
+          />
+          <TouchableOpacity style={styles.addButton} onPress={addTask}>
+            <Text style={styles.addButtonText}>Hinzufügen</Text>
+          </TouchableOpacity>
+        </View>
 
-            <TouchableOpacity onPress={() => deleteTask(item.id)}>
-              <Text style={{ color: "red" }}>Löschen</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      />
+        <FlatList
+          data={tasks}
+          keyExtractor={(item) => item.id}
+          style={styles.list}
+          contentContainerStyle={
+            tasks.length === 0 ? styles.emptyListContainer : undefined
+          }
+          renderItem={({ item }) => (
+            <View style={styles.itemRow}>
+              <TouchableOpacity
+                style={styles.itemContent}
+                onPress={() => toggleTask(item.id)}
+              >
+                <View
+                  style={[
+                    styles.statusIndicator,
+                    item.completed && styles.statusIndicatorDone,
+                  ]}
+                />
+                <Text
+                  style={[styles.itemText, item.completed && styles.done]}
+                >
+                  {item.title}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                accessible
+                accessibilityRole="button"
+                accessibilityLabel={`Aufgabe "${item.title}" löschen`}
+                onPress={() => deleteTask(item.id)}
+              >
+                <Text style={styles.deleteText}>Löschen</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      </View>
     </View>
   );
 }
@@ -132,44 +158,116 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 40,
-    backgroundColor: "#ffffff", // weißer Hintergrund
+    paddingTop: 60,
+    paddingHorizontal: 24,
+    paddingBottom: 24,
+    backgroundColor: "#020617",
   },
-  
-  title: {
-    fontSize: 26,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#000000",
+  header: {
+    marginBottom: 24,
   },
-  
-  inputRow: { flexDirection: "row", marginBottom: 10 },
+  appTitle: {
+    fontSize: 28,
+    fontWeight: "800",
+    color: "#e5e7eb",
+    marginBottom: 4,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "#9ca3af",
+  },
+  card: {
+    flex: 1,
+    backgroundColor: "#020617",
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "#1f2937",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.2,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  inputRow: {
+    flexDirection: "row",
+    marginBottom: 12,
+  },
   input: {
     flex: 1,
+    borderRadius: 999,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: "#020617",
     borderWidth: 1,
-    padding: 8,
-    marginRight: 8,
-    borderRadius: 6,
+    borderColor: "#1f2937",
+    color: "#e5e7eb",
   },
   addButton: {
-    paddingHorizontal: 12,
+    marginLeft: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 999,
+    backgroundColor: "#22c55e",
+    alignItems: "center",
     justifyContent: "center",
-    borderWidth: 1,
-    borderRadius: 6,
+  },
+  addButtonText: {
+    color: "#022c22",
+    fontWeight: "600",
+  },
+  list: {
+    marginTop: 4,
+  },
+  emptyListContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyText: {
+    color: "#6b7280",
+    fontSize: 14,
+    textAlign: "center",
   },
   itemRow: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 8,
-    borderBottomWidth: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+    backgroundColor: "#020617",
+    borderWidth: 1,
+    borderColor: "#111827",
+    marginBottom: 8,
+  },
+  itemContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+  statusIndicator: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    borderWidth: 2,
+    borderColor: "#4b5563",
+    marginRight: 10,
+  },
+  statusIndicatorDone: {
+    backgroundColor: "#22c55e",
+    borderColor: "#22c55e",
   },
   itemText: {
     fontSize: 16,
-    color: "#000000",
+    color: "#e5e7eb",
   },
-  
   done: {
     textDecorationLine: "line-through",
-    opacity: 0.5,
+    color: "#6b7280",
+  },
+  deleteText: {
+    color: "#f97373",
+    fontSize: 14,
+    paddingLeft: 12,
   },
 });
