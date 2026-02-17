@@ -1,0 +1,22 @@
+@startuml
+
+package "Mobile To-Do App" {
+
+  [User Interface] --> [State Management]
+  [State Management] --> [AsyncStorage]
+
+  [User Interface] : TextInput
+  [User Interface] : FlatList
+  [User Interface] : Buttons
+
+  [State Management] : tasks[]
+  [State Management] : addTask()
+  [State Management] : toggleTask()
+  [State Management] : deleteTask()
+
+  [AsyncStorage] : loadTasks()
+  [AsyncStorage] : saveTasks()
+
+}
+
+@enduml
