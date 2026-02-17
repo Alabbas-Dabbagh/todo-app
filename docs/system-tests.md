@@ -107,19 +107,39 @@ PASS
 Requirement: R6 – Statistics and History
 
 Test Steps:
-1. Ensure there are at least three tasks:  
+1. Ensure there are at least three tasks across all lists:  
    - One completed task  
    - Two open tasks  
-2. Open the `Explore` tab.  
-3. Check the statistics section.  
+2. Open the `Übersicht` tab.  
+3. Check the overall statistics section.  
 4. Check the history list.
 
 Expected Result:
 - The total number of tasks matches the number of created tasks.
-- The counts for open and completed tasks match the current list state.
+- The counts for open and completed tasks match the current global state.
 - The completion rate is calculated correctly (completed / total in percent).
 - The history shows all tasks, sorted with the newest task at the top.
 - Each history entry shows the title, current status (open/completed) and a readable creation time.
+
+Result:
+PASS
+
+---
+
+## T7 – Test Multiple Lists (R7)
+
+Requirement: R7 – Multiple Lists
+
+Test Steps:
+1. On the main screen, select the list “Allgemein”.  
+2. Create two tasks and complete one of them.  
+3. Switch to the list “Arbeit” and create one open task.  
+4. Observe the statistics row for each list.
+
+Expected Result:
+- In “Allgemein”, the list shows only the two created tasks; the statistics row reflects 2 total / 1 open / 1 completed.
+- In “Arbeit”, the list shows only the one created task; the statistics row reflects 1 total / 1 open / 0 completed.
+- Switching lists does not lose any tasks; switching back to a list restores its previous state.
 
 Result:
 PASS

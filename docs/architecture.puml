@@ -5,11 +5,14 @@ package "Mobile To-Do App" {
   [User Interface] --> [State Management]
   [State Management] --> [AsyncStorage]
 
+  [User Interface] : List selector (Allgemein/Arbeit/Einkauf)
   [User Interface] : TextInput
   [User Interface] : FlatList
-  [User Interface] : Buttons
+  [User Interface] : Buttons (Hinzufügen/Löschen)
+  [User Interface] : Explore dashboard (statistics & history)
 
   [State Management] : tasks[]
+  [State Management] : currentListId
   [State Management] : addTask()
   [State Management] : toggleTask()
   [State Management] : deleteTask()

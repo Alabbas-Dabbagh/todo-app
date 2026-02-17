@@ -7,6 +7,11 @@ The **UI texts inside the app are in German** (for example: title `„Meine Aufg
 
 ### Features
 
+- **Multiple lists**  
+  - Predefined lists: “Allgemein”, “Arbeit”, “Einkauf”  
+  - A list selector at the top of the main card lets the user switch between lists  
+  - All operations (add / complete / delete) work per selected list
+
 - **Create tasks**  
   - Enter text into the input field labeled “Neue Aufgabe hinzufügen…”  
   - Confirm via the **„Hinzufügen“** button or the enter/done key on the keyboard  
@@ -21,12 +26,13 @@ The **UI texts inside the app are in German** (for example: title `„Meine Aufg
 
 - **Persistent storage**  
   - Implemented with `AsyncStorage` using the key `todo_tasks_v1`  
-  - On app start, existing tasks are loaded  
+  - On app start, existing tasks are loaded and enriched with list information if missing  
   - Every change to the list is saved automatically
 
 - **Statistics and history (Explore tab)**  
-  - A second tab (`Explore`) shows an overview dashboard  
+  - The second tab (`Übersicht`) shows an overview dashboard  
   - Key figures: total tasks, open tasks, completed tasks and completion rate (in %)  
+  - A per-list summary shows counts and completion rate for each list  
   - A history list shows all tasks in reverse chronological order with their status and creation time
 
 ### UI and design concept
@@ -65,13 +71,16 @@ The **UI texts inside the app are in German** (for example: title `„Meine Aufg
 
 - **Files**:  
   - Main list: `app/(tabs)/index.tsx`  
-  - Overview & statistics: `app/(tabs)/explore.tsx`
+  - Overview & statistics: `app/(tabs)/explore.tsx`  
+  - Shared list definitions: `constants/task-lists.ts`
 - **Type definition**
-  - `Task` contains `id: string`, `title: string`, `completed: boolean`, `createdAt?: number`
+  - `Task` contains `id: string`, `title: string`, `completed: boolean`, `createdAt?: number`, `listId: string`
 - **State**
   - `title`: current input text  
-  - `tasks`: current list of all tasks  
+  - `tasks`: current list of all tasks across lists  
+  - `currentListId`: currently selected list on the main screen  
   - `isLoaded`: flag indicating whether the initial load from storage has completed
 
-The structure is intentionally compact so that the app can easily be extended in the future—for example with filters (open/completed tasks), categories or due dates.
+The structure is intentionally compact so that the app can easily be extended in the future—for example with custom lists, filters, categories or due dates.
+
 

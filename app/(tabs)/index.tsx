@@ -9,12 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { DEFAULT_LIST_ID, TASK_LISTS } from "@/constants/task-lists";
 
 type Task = {
   id: string;
   title: string;
   completed: boolean;
   createdAt?: number;
+  listId: string;
 };
 
 const STORAGE_KEY = "todo_tasks_v1";
@@ -23,6 +25,7 @@ export default function Index() {
   const [title, setTitle] = useState<string>("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [currentListId, setCurrentListId] = useState<string>(DEFAULT_LIST_ID);
 
   // Load tasks on app start
   useEffect(() => {
@@ -30,7 +33,12 @@ export default function Index() {
       try {
         const raw = await AsyncStorage.getItem(STORAGE_KEY);
         if (raw) {
-          setTasks(JSON.parse(raw));
+          const parsed: Task[] = JSON.parse(raw);
+          const withList = parsed.map((task) => ({
+            ...task,
+            listId: task.listId ?? DEFAULT_LIST_ID,
+          }));
+          setTasks(withList);
         }
       } catch (e) {
         console.log("Load error:", e);
@@ -67,6 +75,7 @@ export default function Index() {
       title: title.trim(),
       completed: false,
       createdAt: now,
+      listId: currentListId,
     };
 
     setTasks([newTask, ...tasks]);
@@ -85,18 +94,26 @@ export default function Index() {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
-  const openCount = tasks.filter((task) => !task.completed).length;
-  const completedCount = tasks.length - openCount;
+  const tasksInCurrentList = tasks.filter(
+    (task) => task.listId === currentListId
+  );
+  const openCount = tasksInCurrentList.filter((task) => !task.completed).length;
+  const completedCount = tasksInCurrentList.length - openCount;
   const completionRate =
-    tasks.length === 0 ? 0 : Math.round((completedCount / tasks.length) * 100);
+    tasksInCurrentList.length === 0
+      ? 0
+      : Math.round((completedCount / tasksInCurrentList.length) * 100);
+
+  const currentList =
+    TASK_LISTS.find((list) => list.id === currentListId) ?? TASK_LISTS[0];
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.appTitle}>Meine Aufgaben</Text>
         <Text style={styles.subtitle}>
-          {tasks.length === 0
-            ? "Du bist aktuell auf dem Laufenden."
+          {tasksInCurrentList.length === 0
+            ? `In der Liste "${currentList.title}" gibt es aktuell keine offenen Aufgaben.`
             : `${openCount} offene ${
                 openCount === 1 ? "Aufgabe" : "Aufgaben"
               }`}
@@ -104,11 +121,38 @@ export default function Index() {
       </View>
 
       <View style={styles.card}>
+        <View style={styles.listTabsRow}>
+          {TASK_LISTS.map((list) => {
+            const isActive = list.id === currentListId;
+            return (
+              <TouchableOpacity
+                key={list.id}
+                style={[
+                  styles.listTab,
+                  isActive && styles.listTabActive,
+                ]}
+                onPress={() => setCurrentListId(list.id)}
+              >
+                <Text
+                  style={[
+                    styles.listTabText,
+                    isActive && styles.listTabTextActive,
+                  ]}
+                >
+                  {list.title}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+
         {tasks.length > 0 && (
           <View style={styles.statsRow}>
             <View style={styles.statBox}>
               <Text style={styles.statLabel}>Insgesamt</Text>
-              <Text style={styles.statValue}>{tasks.length}</Text>
+              <Text style={styles.statValue}>
+                {tasksInCurrentList.length}
+              </Text>
             </View>
             <View style={styles.statBox}>
               <Text style={styles.statLabel}>Offen</Text>
@@ -128,7 +172,7 @@ export default function Index() {
         <View style={styles.inputRow}>
           <TextInput
             style={styles.input}
-            placeholder="Neue Aufgabe"
+            placeholder="Neue Aufgabe hinzufügen..."
             placeholderTextColor="#6b7280"
             value={title}
             onChangeText={setTitle}
@@ -215,6 +259,31 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 16,
     elevation: 8,
+  },
+  listTabsRow: {
+    flexDirection: "row",
+    marginBottom: 12,
+  },
+  listTab: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: "#1f2937",
+    marginRight: 8,
+    backgroundColor: "#020617",
+  },
+  listTabActive: {
+    backgroundColor: "#111827",
+    borderColor: "#22c55e",
+  },
+  listTabText: {
+    fontSize: 13,
+    color: "#9ca3af",
+  },
+  listTabTextActive: {
+    color: "#e5e7eb",
+    fontWeight: "600",
   },
   statsRow: {
     flexDirection: "row",

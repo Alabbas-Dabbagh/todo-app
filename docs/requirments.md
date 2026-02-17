@@ -54,7 +54,7 @@ Acceptance Criteria:
 
 ---
 
-# Additional Functional Requirement
+# Additional Functional Requirements
 
 ## R6 – Statistics and History
 When the user opens the `Explore` tab,  
@@ -64,6 +64,18 @@ Acceptance Criteria:
 - The overview shows: total number of tasks, number of open tasks, number of completed tasks and completion rate in percent.
 - A history list shows tasks in reverse chronological order (newest first).
 - Each history entry shows at least the task title, its current status (open / completed) and the creation time.
+
+---
+
+## R7 – Multiple Lists
+When the user switches between predefined lists,  
+the system shall filter tasks and statistics to the currently selected list on the main screen.
+
+Acceptance Criteria:
+- The app provides at least the lists “Allgemein”, “Arbeit” and “Einkauf”.
+- New tasks are always created in the currently selected list.
+- The list selector visibly highlights the active list.
+- The statistics row above the task list reflects only the tasks of the active list.
 
 ---
 
