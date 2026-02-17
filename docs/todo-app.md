@@ -41,6 +41,7 @@ The **UI texts inside the app are in German** (for example: title `„Meine Aufg
   - Dark, calm background theme (`styles.container`)  
   - Header at the top with the title **„Meine Aufgaben“** and a subtitle indicating the current status  
   - Below, a “card” (`styles.card`) that groups the input area and the list
+  - On Android devices, the system navigation bar at the bottom is tinted to match the dark app background so that the back / home buttons remain clearly visible
 
 - **Status display**
   - The header shows how many open tasks exist  
