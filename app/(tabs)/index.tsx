@@ -14,6 +14,7 @@ type Task = {
   id: string;
   title: string;
   completed: boolean;
+  createdAt?: number;
 };
 
 const STORAGE_KEY = "todo_tasks_v1";
@@ -60,10 +61,12 @@ export default function Index() {
       return;
     }
 
+    const now = Date.now();
     const newTask: Task = {
-      id: Date.now().toString(),
+      id: now.toString(),
       title: title.trim(),
       completed: false,
+      createdAt: now,
     };
 
     setTasks([newTask, ...tasks]);
@@ -83,6 +86,9 @@ export default function Index() {
   };
 
   const openCount = tasks.filter((task) => !task.completed).length;
+  const completedCount = tasks.length - openCount;
+  const completionRate =
+    tasks.length === 0 ? 0 : Math.round((completedCount / tasks.length) * 100);
 
   return (
     <View style={styles.container}>
@@ -98,10 +104,31 @@ export default function Index() {
       </View>
 
       <View style={styles.card}>
+        {tasks.length > 0 && (
+          <View style={styles.statsRow}>
+            <View style={styles.statBox}>
+              <Text style={styles.statLabel}>Insgesamt</Text>
+              <Text style={styles.statValue}>{tasks.length}</Text>
+            </View>
+            <View style={styles.statBox}>
+              <Text style={styles.statLabel}>Offen</Text>
+              <Text style={styles.statValue}>{openCount}</Text>
+            </View>
+            <View style={styles.statBox}>
+              <Text style={styles.statLabel}>Erledigt</Text>
+              <Text style={styles.statValue}>{completedCount}</Text>
+            </View>
+            <View style={styles.statBox}>
+              <Text style={styles.statLabel}>Quote</Text>
+              <Text style={styles.statValue}>{completionRate}%</Text>
+            </View>
+          </View>
+        )}
+
         <View style={styles.inputRow}>
           <TextInput
             style={styles.input}
-            placeholder="Neue Aufgabe hinzufügen..."
+            placeholder="Neue Aufgabe"
             placeholderTextColor="#6b7280"
             value={title}
             onChangeText={setTitle}
@@ -188,6 +215,31 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 16,
     elevation: 8,
+  },
+  statsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 16,
+  },
+  statBox: {
+    flex: 1,
+    marginRight: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    borderRadius: 10,
+    backgroundColor: "#020617",
+    borderWidth: 1,
+    borderColor: "#111827",
+  },
+  statLabel: {
+    fontSize: 11,
+    color: "#9ca3af",
+    marginBottom: 2,
+  },
+  statValue: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#e5e7eb",
   },
   inputRow: {
     flexDirection: "row",
