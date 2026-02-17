@@ -1,98 +1,175 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+type Task = {
+  id: string;
+  title: string;
+  completed: boolean;
+};
 
-export default function HomeScreen() {
+const STORAGE_KEY = "todo_tasks_v1";
+
+export default function Index() {
+  const [title, setTitle] = useState<string>("");
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Load tasks on app start
+  useEffect(() => {
+    const loadTasks = async () => {
+      try {
+        const raw = await AsyncStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          setTasks(JSON.parse(raw));
+        }
+      } catch (e) {
+        console.log("Load error:", e);
+      } finally {
+        setIsLoaded(true);
+      }
+    };
+
+    loadTasks();
+  }, []);
+
+  // Save tasks after change
+  useEffect(() => {
+    const saveTasks = async () => {
+      try {
+        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+      } catch (e) {
+        console.log("Save error:", e);
+      }
+    };
+
+    if (isLoaded) saveTasks();
+  }, [tasks]);
+
+  const addTask = () => {
+    if (!title.trim()) {
+      Alert.alert("Hinweis", "Bitte eine Aufgabe eingeben.");
+      return;
+    }
+
+    const newTask: Task = {
+      id: Date.now().toString(),
+      title: title.trim(),
+      completed: false,
+    };
+
+    setTasks([newTask, ...tasks]);
+    setTitle("");
+  };
+
+  const toggleTask = (id: string) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id
+          ? { ...task, completed: !task.completed }
+          : task
+      )
+    );
+  };
+
+  const deleteTask = (id: string) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <View style={styles.container}>
+      <Text style={styles.title}>To-Do Liste</Text>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      <View style={styles.inputRow}>
+        <TextInput
+          style={styles.input}
+          placeholder="Neue Aufgabe..."
+          value={title}
+          onChangeText={setTitle}
+        />
+        <TouchableOpacity style={styles.addButton} onPress={addTask}>
+          <Text style={{ color: "#000000" }}>Add</Text>
+        </TouchableOpacity>
+      </View>
+
+      <FlatList
+        data={tasks}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.itemRow}>
+            <TouchableOpacity
+              style={{ flex: 1 }}
+              onPress={() => toggleTask(item.id)}
+            >
+              <Text
+                style={[
+                  styles.itemText,
+                  item.completed && styles.done,
+                ]}
+              >
+                {item.title}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => deleteTask(item.id)}>
+              <Text style={{ color: "red" }}>Löschen</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    padding: 40,
+    backgroundColor: "#ffffff", // weißer Hintergrund
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  
+  title: {
+    fontSize: 26,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#000000",
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  
+  inputRow: { flexDirection: "row", marginBottom: 10 },
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    padding: 8,
+    marginRight: 8,
+    borderRadius: 6,
+  },
+  addButton: {
+    paddingHorizontal: 12,
+    justifyContent: "center",
+    borderWidth: 1,
+    borderRadius: 6,
+  },
+  itemRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+  },
+  itemText: {
+    fontSize: 16,
+    color: "#000000",
+  },
+  
+  done: {
+    textDecorationLine: "line-through",
+    opacity: 0.5,
   },
 });
