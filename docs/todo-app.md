@@ -9,7 +9,7 @@ The **UI texts inside the app are in German** (for example: title `„Meine Aufg
 
 - **Multiple lists**  
   - Predefined lists: “Allgemein”, “Arbeit”, “Einkauf”  
-  - A list selector at the top of the main card lets the user switch between lists  
+  - A list selector with icons (person / briefcase / shopping cart) at the top of the main card lets the user switch between lists  
   - All operations (add / complete / delete) work per selected list
 
 - **Create tasks**  

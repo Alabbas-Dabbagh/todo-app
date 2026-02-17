@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { DEFAULT_LIST_ID, TASK_LISTS } from "@/constants/task-lists";
+import { IconSymbol } from "@/components/ui/icon-symbol";
 
 type Task = {
   id: string;
@@ -133,26 +134,31 @@ export default function Index() {
                 ]}
                 onPress={() => setCurrentListId(list.id)}
               >
-                <Text
-                  style={[
-                    styles.listTabText,
-                    isActive && styles.listTabTextActive,
-                  ]}
-                >
-                  {list.title}
-                </Text>
+                <View style={styles.listTabInner}>
+                  <IconSymbol
+                    size={16}
+                    name={list.iconName}
+                    color={isActive ? "#22c55e" : "#6b7280"}
+                  />
+                  <Text
+                    style={[
+                      styles.listTabText,
+                      isActive && styles.listTabTextActive,
+                    ]}
+                  >
+                    {list.title}
+                  </Text>
+                </View>
               </TouchableOpacity>
             );
           })}
         </View>
 
-        {tasks.length > 0 && (
+        {tasksInCurrentList.length > 0 && (
           <View style={styles.statsRow}>
             <View style={styles.statBox}>
               <Text style={styles.statLabel}>Insgesamt</Text>
-              <Text style={styles.statValue}>
-                {tasksInCurrentList.length}
-              </Text>
+              <Text style={styles.statValue}>{tasksInCurrentList.length}</Text>
             </View>
             <View style={styles.statBox}>
               <Text style={styles.statLabel}>Offen</Text>
@@ -185,7 +191,7 @@ export default function Index() {
         </View>
 
         <FlatList
-          data={tasks}
+          data={tasksInCurrentList}
           keyExtractor={(item) => item.id}
           style={styles.list}
           contentContainerStyle={
@@ -272,6 +278,11 @@ const styles = StyleSheet.create({
     borderColor: "#1f2937",
     marginRight: 8,
     backgroundColor: "#020617",
+  },
+  listTabInner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
   },
   listTabActive: {
     backgroundColor: "#111827",

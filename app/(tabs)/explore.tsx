@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { DEFAULT_LIST_ID, TASK_LISTS } from "@/constants/task-lists";
+import { IconSymbol } from "@/components/ui/icon-symbol";
 
 type Task = {
   id: string;
@@ -115,7 +116,17 @@ export default function ExploreScreen() {
         {statsByList.map((list) => (
           <View key={list.id} style={styles.listRow}>
             <View style={{ flex: 1 }}>
-              <Text style={styles.listTitle}>{list.title}</Text>
+              <View style={styles.listTitleRow}>
+                <IconSymbol
+                  size={16}
+                  name={
+                    TASK_LISTS.find((l) => l.id === list.id)?.iconName ??
+                    "list.bullet"
+                  }
+                  color="#9ca3af"
+                />
+                <Text style={styles.listTitle}>{list.title}</Text>
+              </View>
               <Text style={styles.listMeta}>
                 {list.total} gesamt · {list.open} offen · {list.completed} erledigt
               </Text>
@@ -301,6 +312,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: "#111827",
+  },
+  listTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
   },
   listTitle: {
     fontSize: 14,

@@ -74,7 +74,7 @@ the system shall filter tasks and statistics to the currently selected list on t
 Acceptance Criteria:
 - The app provides at least the lists “Allgemein”, “Arbeit” and “Einkauf”.
 - New tasks are always created in the currently selected list.
-- The list selector visibly highlights the active list.
+- The list selector visibly highlights the active list and shows an icon for each list.
 - The statistics row above the task list reflects only the tasks of the active list.
 
 ---

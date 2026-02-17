@@ -24,7 +24,7 @@ Main parts:
 ## 2. Components
 
 ### UI layer
-- List selector (chips) to switch between predefined lists (main tab `index.tsx`)  
+- List selector (chips with icons) to switch between predefined lists (main tab `index.tsx`)  
 - `TextInput` to enter a task in the currently selected list  
 - **„Hinzufügen“** button to create a task in the active list  
 - `FlatList` to display all tasks of the active list  
