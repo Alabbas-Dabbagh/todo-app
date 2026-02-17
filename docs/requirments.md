@@ -14,8 +14,7 @@ Android (React Native with Expo)
 # Functional Requirements
 
 ## R1 – Task Creation
-
-When the user enters text into the input field and presses the "Add" button,  
+When the user enters text into the input field and presses the "Add" button,
 the system shall create a new task and display it in the task list.
 
 Acceptance Criteria:
@@ -26,8 +25,7 @@ Acceptance Criteria:
 ---
 
 ## R2 – Task Completion
-
-When the user taps on an existing task,  
+When the user taps on an existing task,
 the system shall mark the task as completed and visually distinguish it.
 
 Acceptance Criteria:
@@ -37,8 +35,7 @@ Acceptance Criteria:
 ---
 
 ## R3 – Task Deletion
-
-When the user presses the delete button next to a task,  
+When the user presses the delete button next to a task,
 the system shall remove the selected task from the list.
 
 Acceptance Criteria:
@@ -48,8 +45,7 @@ Acceptance Criteria:
 ---
 
 ## R4 – Local Persistence
-
-When the user closes and reopens the application,  
+When the user closes and reopens the application,
 the system shall restore previously created tasks.
 
 Acceptance Criteria:
@@ -61,7 +57,6 @@ Acceptance Criteria:
 # Non-Functional Requirement
 
 ## R5 – Usability
-
 The application shall provide a simple and intuitive user interface optimized for smartphone usage.
 
 Acceptance Criteria:
