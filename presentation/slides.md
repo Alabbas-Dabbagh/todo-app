@@ -49,9 +49,6 @@ Speaker notes:
   - Simple, mobile To‑Do App
   - Lokale Speicherung, keine Cloud / kein Login
   - Fokus auf Übersichtlichkeit, Dark Theme & gute Bedienbarkeit
-- **Rahmenbedingungen**:
-  - React Native mit Expo
-  - Maximaler Umfang für einen 15‑Minuten‑Vortrag
 
 <!--
 Speaker notes:
@@ -114,7 +111,6 @@ Speaker notes:
 - **R5 – Usability**:
   - Touch-freundliche Buttons
   - Responsive Layout, gut lesbare Schrift
-  - Dunkles Design (auch für Navigation-Bar unten)
 - **R6 – Statistik & Verlauf**:
   - Übersichtstab zeigt:
     - Gesamtanzahl, offene & erledigte Aufgaben
@@ -124,7 +120,6 @@ Speaker notes:
 - **R7 – Multiple Lists**:
   - Listen: „Allgemein“, „Arbeit“, „Einkauf“ + Ansicht „Alle“
   - Aufgaben gehören genau **einer** Liste (`listId`)
-  - Hauptseite zeigt pro Liste nur **offene** Aufgaben
 
 <!--
 Speaker notes:
@@ -222,7 +217,6 @@ Speaker notes:
 - **Dark Theme & Navigation-Bar**:
   - Hintergrund `#020617` für Inhalt
   - Android Navigation-Bar via `expo-navigation-bar` dunkel eingefärbt
-  - Helle Buttons für gute Lesbarkeit
 
 <!--
 Speaker notes:
@@ -235,9 +229,6 @@ Speaker notes:
 
 ## 5. Systemtests & Traceability
 
-- **Testdokumentation**:
-  - `docs/system-tests.md`
-  - Tests T1–T7
 - **Mapping Requirements → Tests**:
   - R1: T1 (Task Creation)
   - R2: T2 (Task Completion)
@@ -341,7 +332,6 @@ Speaker notes:
 - **Mögliche Erweiterungen**:
   - Eigene Listen definieren
   - Erinnerungen / Notifications
-  - Optionaler Cloud-Sync (nicht Teil dieses Projekts)
 
 <!--
 Speaker notes:

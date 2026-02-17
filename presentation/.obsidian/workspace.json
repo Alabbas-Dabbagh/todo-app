@@ -1,0 +1,221 @@
+{
+  "main": {
+    "id": "ae49258dc06471de",
+    "type": "split",
+    "children": [
+      {
+        "id": "a8fb12f14f9de421",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "297feed05d448ac2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "slides.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "slides"
+            }
+          }
+        ]
+      },
+      {
+        "id": "925232886c745b2f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "02818e355ea694c5",
+            "type": "leaf",
+            "state": {
+              "type": "marp-preview-view",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Deck Preview"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "69af4d8001f07e0f",
+    "type": "split",
+    "children": [
+      {
+        "id": "6039bdba9fae2b56",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c26e40bf8731e243",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "85189bcf837a2a3b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "d932a542ca08b512",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "6c6f83e73f49974d",
+    "type": "split",
+    "children": [
+      {
+        "id": "f5bc9e1686c8f8eb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c3c5c00d2d32611d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "slides.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for slides"
+            }
+          },
+          {
+            "id": "bf54ad4e3b7fd211",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "slides.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from slides"
+            }
+          },
+          {
+            "id": "aa79394393940339",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "d9351638b7ab4864",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "4ed3639e55a6dfa4",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "slides.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of slides"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "marp-slides:Show Slide Preview": false
+    }
+  },
+  "active": "02818e355ea694c5",
+  "lastOpenFiles": [
+    "~$slides.pptx",
+    "slides.pptx",
+    "slides.003.png",
+    "slides.001.png",
+    "slides.md",
+    "slides.html",
+    "slides.016.png",
+    "slides.015.png",
+    "slides.014.png",
+    "slides.013.png",
+    "slides.012.png",
+    "slides.011.png",
+    "slides.010.png",
+    "slides.009.png",
+    "demo-script.md"
+  ]
+}
